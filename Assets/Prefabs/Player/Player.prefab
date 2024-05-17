@@ -189,11 +189,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   takesFallDamage: 1
+  playerFallDamageVelocityThreshold: 10
   moveSpeed: 5
   jumpPower: 8
-  doublePressThreshold: 0.25
-  dashDistance: 1000
-  dashCooldown: 3
+  jumpFallOffRate: 0.5
+  dashPower: 500
+  dashCooldown: 1
   maxJumps: 2
   groundCheck: {fileID: 6904527574526003622}
   groundCheckSize: {x: 0.5, y: 0.05}
@@ -202,7 +203,7 @@ MonoBehaviour:
     m_Bits: 8
   baseGravity: 2
   maxFallSpeed: 10
-  fallSpeedMult: 2
+  fallSpeedMultiplier: 2
   isInvulnerable: 0
   isScary: 0
 --- !u!114 &2581496604019156485

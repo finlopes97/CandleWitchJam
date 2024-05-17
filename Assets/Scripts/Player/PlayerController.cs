@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -23,6 +21,8 @@ namespace Player
         [SerializeField] private float moveSpeed = 10.0f;
         [Tooltip("Force with which the player can jump.")]
         [SerializeField] private float jumpPower = 8.0f;
+        [Tooltip("Rate at which the player's jump decreases in force (i.e. variable jump height).")]
+        [SerializeField] [Range(0.1f, 1.0f)] private float jumpFallOffRate = 1.0f;
 
         // [Header("Ability Settings")] 
         // [Tooltip("Amount of time between key presses to register a double tap.")]
@@ -32,7 +32,9 @@ namespace Player
         [Tooltip("Force applied to the character when dashing.")]
         [SerializeField] private float dashPower = 500f;
         [Tooltip("Cooldown between dashes in seconds.")]
-        [SerializeField] private int dashCooldown = 3;
+        [SerializeField] private float dashCooldown = 3.0f;
+        // [Tooltip("Amount of times a player can dash (Hades style, rather than cooldown based).")]
+        // [SerializeField] private int maxDashes = 3;
 
         [Header("Double Jump")]
         [Tooltip("Amount of times a player can jump. Set to 2 for testing purposes.")]
@@ -62,13 +64,15 @@ namespace Player
 
         private Rigidbody2D _rigidbody2D;
         private float _horizontalMovementDirection;
-        private float _jumpsRemaining;
+        private int _jumpsRemaining;
+        private float _lastDashTime;
         private float _playerFacingDirection;
         private bool _isDashing;
 
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
+            _jumpsRemaining = maxJumps;
         }
         
         /// <summary>
@@ -80,7 +84,7 @@ namespace Player
             if (context.performed)
             {
                 _playerFacingDirection = context.ReadValue<float>();
-                Debug.Log($"Player is facing: {(_playerFacingDirection < 0 ? "left" : "right")}");
+                // Debug.Log($"Player is facing: {(_playerFacingDirection < 0 ? "left" : "right")}");
             }
 
             _horizontalMovementDirection = context.ReadValue<float>();
@@ -94,11 +98,18 @@ namespace Player
         {
             if(_jumpsRemaining > 0)
             {
+                if (context.started)
+                {
+                    // Debug.Log($"Jumps remaining: {_jumpsRemaining}");
+                    _jumpsRemaining--;
+                }
                 if (context.performed)
                 {
-                    Debug.Log("Jump (full) performed...");
                     _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpPower);
-                    _jumpsRemaining--;
+                }
+                else if (context.canceled)
+                {
+                    _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y * jumpFallOffRate);
                 }
             }
         }
@@ -108,18 +119,17 @@ namespace Player
         /// </summary>
         /// <param name="context">Input context containing action details.</param>
         public void Dash(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                Debug.Log("Dash action performed...");
-                _isDashing = true;
-                _rigidbody2D.AddForce(new Vector2((_playerFacingDirection * dashPower), _rigidbody2D.velocity.y + 1),
-                    ForceMode2D.Force);
+        { 
+            if (context.started && Time.time >= _lastDashTime + dashCooldown && !_isDashing)
+            { 
+                // Debug.Log("Dash action performed..."); 
+                _isDashing = true; 
+                _rigidbody2D.AddForce(new Vector2((_playerFacingDirection * dashPower), _rigidbody2D.velocity.y + 1), ForceMode2D.Force);
+                _lastDashTime = Time.time;
             }
-
             if (context.canceled)
-            {
-                Debug.Log("Dash action completed...");
+            { 
+                // Debug.Log("Dash action completed..."); 
                 _isDashing = false;
             }
         }
