@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,8 +34,8 @@ namespace Player
         [SerializeField] private float dashPower = 500f;
         [Tooltip("Cooldown between dashes in seconds.")]
         [SerializeField] private float dashCooldown = 3.0f;
-        // [Tooltip("Amount of times a player can dash (Hades style, rather than cooldown based).")]
-        // [SerializeField] private int maxDashes = 3;
+        [Tooltip("Duration of the dash in seconds.")]
+        [SerializeField] private float dashDuration = 0.3f;
 
         [Header("Double Jump")]
         [Tooltip("Amount of times a player can jump. Set to 2 for testing purposes.")]
@@ -61,8 +62,13 @@ namespace Player
         [SerializeField] private bool isInvulnerable;
         [Tooltip("Scary mode.")]
         [SerializeField] private bool isScary;
+        [SerializeField] private Sprite scarySprite;
+        [Tooltip("Anime Mode.")]
+        [SerializeField] private GameObject dashTrailObject;
+        [SerializeField] private bool leaveAnimeTrail;
 
         private Rigidbody2D _rigidbody2D;
+        private SpriteRenderer _spriteRenderer;
         private float _horizontalMovementDirection;
         private int _jumpsRemaining;
         private float _lastDashTime;
@@ -72,7 +78,10 @@ namespace Player
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _jumpsRemaining = maxJumps;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            dashTrailObject.SetActive(false);
+            
+            ScaryCheck();
         }
         
         /// <summary>
@@ -98,18 +107,15 @@ namespace Player
         {
             if(_jumpsRemaining > 0)
             {
-                if (context.started)
-                {
-                    // Debug.Log($"Jumps remaining: {_jumpsRemaining}");
-                    _jumpsRemaining--;
-                }
                 if (context.performed)
                 {
                     _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpPower);
+                    _jumpsRemaining--;
                 }
                 else if (context.canceled)
                 {
                     _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y * jumpFallOffRate);
+                    _jumpsRemaining--;
                 }
             }
         }
@@ -121,17 +127,25 @@ namespace Player
         public void Dash(InputAction.CallbackContext context)
         { 
             if (context.started && Time.time >= _lastDashTime + dashCooldown && !_isDashing)
-            { 
-                // Debug.Log("Dash action performed..."); 
-                _isDashing = true; 
-                _rigidbody2D.AddForce(new Vector2((_playerFacingDirection * dashPower), _rigidbody2D.velocity.y + 1), ForceMode2D.Force);
-                _lastDashTime = Time.time;
+            {
+                StartCoroutine(DashCoroutine());
             }
-            if (context.canceled)
-            { 
-                // Debug.Log("Dash action completed..."); 
-                _isDashing = false;
-            }
+        }
+
+        /// <summary>
+        /// Coroutine to handle the dash duration and reset the dash state.
+        /// </summary>
+        private IEnumerator DashCoroutine()
+        {
+            if(leaveAnimeTrail) { dashTrailObject.SetActive(true); }
+            _isDashing = true; 
+            _lastDashTime = Time.time;
+            _rigidbody2D.AddForce(new Vector2((_playerFacingDirection * dashPower), _rigidbody2D.velocity.y + 1), ForceMode2D.Force);
+            
+            yield return new WaitForSeconds(dashDuration);
+            
+            if (leaveAnimeTrail) { dashTrailObject.SetActive(false); }
+            _isDashing = false;
         }
 
         /// <summary>
@@ -181,6 +195,14 @@ namespace Player
         {
             Gizmos.color = Color.white;
             Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+        }
+
+        private void ScaryCheck()
+        {
+            if (isScary)
+            {
+                _spriteRenderer.sprite = scarySprite;
+            }
         }
     }
 }
