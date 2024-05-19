@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FMOD.Studio;
 
 namespace Player
 {
@@ -74,6 +75,10 @@ namespace Player
         private float _lastDashTime;
         private float _playerFacingDirection;
         private bool _isDashing;
+        private bool _isGrounded;
+
+        //audio
+        private EventInstance playerFootsteps;
 
         private void Awake()
         {
@@ -82,8 +87,14 @@ namespace Player
             dashTrailObject.SetActive(false);
             
             ScaryCheck();
+
         }
-        
+
+        private void Start()
+        {
+            playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.footsteps);
+        }
+
         /// <summary>
         /// Handles player movement input.
         /// </summary>
@@ -137,6 +148,9 @@ namespace Player
         /// </summary>
         private IEnumerator DashCoroutine()
         {
+            //play dash sound here
+            //AudioManager.instance.PlayOneShot(FMODEvents.instance.dash, transform.position);
+
             if(leaveAnimeTrail) { dashTrailObject.SetActive(true); }
             _isDashing = true; 
             _lastDashTime = Time.time;
@@ -156,6 +170,9 @@ namespace Player
             if (Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer))
             {
                 _jumpsRemaining = maxJumps;
+                _isGrounded = true;
+            } else {
+                _isGrounded = false;
             }
         }
 
@@ -183,6 +200,8 @@ namespace Player
             {
                 _rigidbody2D.velocity = new Vector2(_horizontalMovementDirection * moveSpeed, _rigidbody2D.velocity.y);
             }
+
+            UpdateSound();
         }
 
         private void Update()
@@ -202,6 +221,23 @@ namespace Player
             if (isScary)
             {
                 _spriteRenderer.sprite = scarySprite;
+            }
+        }
+
+        private void UpdateSound() {
+
+            //start footsteps event if the player moves and is on the ground
+            if(_rigidbody2D.velocity.x != 0 && _isGrounded && !_isDashing) {
+
+                //get the playback state
+                PLAYBACK_STATE playbackState;
+                playerFootsteps.getPlaybackState(out playbackState);
+
+                if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
+                    playerFootsteps.start();
+
+            } else {
+                playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
             }
         }
     }
