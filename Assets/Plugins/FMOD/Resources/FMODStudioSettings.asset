@@ -526,8 +526,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../../../Candle Witch fmod project/Candle Witch.fspro
-  sourceBankPath: ../../../Candle Witch fmod project/Build
+  sourceProjectPath: Assets/FMOD project/Candle Witch.fspro
+  sourceBankPath: Assets/FMOD project/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
