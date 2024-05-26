@@ -19,7 +19,7 @@ public class FMODEvents : MonoBehaviour
     private void Awake() {
         //singleton
         if (instance != null) {
-            Debug.LogError("More than one FMODEvents instance");
+            Debug.LogError("More than one FMODEvents Instance");
         }
         instance = this;
     }

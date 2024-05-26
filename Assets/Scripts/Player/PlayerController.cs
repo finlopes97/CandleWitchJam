@@ -3,60 +3,71 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Generics;
 using FMOD.Studio;
+using Managers;
 
 namespace Player
 {
     /// <summary>
-    /// Controller for the player, tracks their health, abilities, movement settings and input.
+    /// Controller for the player's movement, abilities and input settings and
+    /// behaviors.
     /// </summary>
     public class PlayerController : MonoBehaviour
     {
-        [Header("Movement Settings")] 
-        [SerializeField, Tooltip("Speed at which the player moves.")] 
+        [Header("Movement Settings")] [SerializeField, Tooltip("Speed at which the player moves.")]
         private float moveSpeed = 10.0f;
-        [SerializeField, Tooltip("Force with which the player can jump.")] 
+
+        [SerializeField, Tooltip("Force with which the player can jump.")]
         private float jumpPower = 8.0f;
+
         [SerializeField, Tooltip("Rate at which the player's jump decreases in " +
-                                 "force (i.e. variable jump height)."), Range(0.1f, 1.0f)] 
+                                 "force (i.e. variable jump height)."), Range(0.1f, 1.0f)]
         private float jumpFallOffRate = 1.0f;
 
         [Header("Dash Settings")] [SerializeField, Tooltip("Whether or not the player can dash")]
         private bool canDash;
-        [SerializeField, Tooltip("Force applied to the character when dashing.")] 
+
+        [SerializeField, Tooltip("Force applied to the character when dashing.")]
         private float dashPower = 500f;
+
         [SerializeField, Tooltip("Cooldown between dashes in seconds.")]
         private float dashCooldown = 3.0f;
-        [SerializeField, Tooltip("Duration of the dash in seconds.")] 
+
+        [SerializeField, Tooltip("Duration of the dash in seconds.")]
         private float dashDuration = 0.3f;
 
         [Header("Double Jump")]
-        [SerializeField, Tooltip("Amount of times a player can jump. Set to 2 for testing purposes.")] 
+        [SerializeField, Tooltip("Amount of times a player can jump. Set to 2 for testing purposes.")]
         private int maxJumps = 1;
-        
+
         [Header("Ground Checks")]
-        [SerializeField, Tooltip("Transform (point in space) for detecting ground beneath player.")] 
+        [SerializeField, Tooltip("Transform (point in space) for detecting ground beneath player.")]
         private Transform groundCheck;
-        [SerializeField, Tooltip("Size of that transform, should be roughly in line with the player character's sprite's feet.")] 
+
+        [SerializeField,
+         Tooltip("Size of that transform, should be roughly in line with the player character's sprite's feet.")]
         private Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
-        [SerializeField, Tooltip("Layer for detecting intersections with ground.")] 
+
+        [SerializeField, Tooltip("Layer for detecting intersections with ground.")]
         private LayerMask groundLayer;
 
-        [Header("Gravity")] 
-        [SerializeField, Tooltip("The base gravity applied to the player.")] 
+        [Header("Gravity")] [SerializeField, Tooltip("The base gravity applied to the player.")]
         private float baseGravity = 2.0f;
-        [SerializeField, Tooltip("The max speed at which a player can fall.")] 
+
+        [SerializeField, Tooltip("The max speed at which a player can fall.")]
         private float maxFallSpeed = 18.0f;
-        [SerializeField, Tooltip("The rate at which a player's fall speed can increase while falling.")] 
+
+        [SerializeField, Tooltip("The rate at which a player's fall speed can increase while falling.")]
         private float fallSpeedMultiplier = 2.0f;
-        
-        [SerializeField, Tooltip("Scary mode.")] 
+
+        [SerializeField, Tooltip("Scary mode.")]
         private bool isScary;
-        [SerializeField] 
-        private Sprite scarySprite;
-        [SerializeField, Tooltip("Anime Mode.")] 
+
+        [SerializeField] private Sprite scarySprite;
+
+        [SerializeField, Tooltip("Anime Mode.")]
         private GameObject dashTrailObject;
-        [SerializeField] 
-        private bool leaveAnimeTrail;
+
+        [SerializeField] private bool leaveAnimeTrail;
 
         private Rigidbody2D _rigidbody2D;
         private SpriteRenderer _spriteRenderer;
@@ -76,7 +87,7 @@ namespace Player
             _spriteRenderer = GetComponent<SpriteRenderer>();
             // dashTrailObject.SetActive(false);
             ScaryCheck();
-            _playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.footsteps);
+            _playerFootsteps = AudioManager.Instance.CreateEventInstance(FMODEvents.instance.footsteps);
         }
 
         /// <summary>
@@ -100,7 +111,7 @@ namespace Player
         /// <param name="context">Input context containing action details.</param>
         public void Jump(InputAction.CallbackContext context)
         {
-            if(_jumpsRemaining > 0)
+            if (_jumpsRemaining > 0)
             {
                 if (context.performed)
                 {
@@ -109,18 +120,19 @@ namespace Player
                 }
                 else if (context.canceled)
                 {
-                    _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y * jumpFallOffRate);
+                    _rigidbody2D.velocity =
+                        new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y * jumpFallOffRate);
                     _jumpsRemaining--;
                 }
             }
         }
-        
+
         /// <summary>
         /// Performs a dash in the facing direction if the dash action is performed.
         /// </summary>
         /// <param name="context">Input context containing action details.</param>
         public void Dash(InputAction.CallbackContext context)
-        { 
+        {
             if (canDash && context.started && Time.time >= _lastDashTime + dashCooldown && !_isDashing)
             {
                 StartCoroutine(DashCoroutine());
@@ -133,16 +145,25 @@ namespace Player
         private IEnumerator DashCoroutine()
         {
             //play dash sound here
-            //AudioManager.instance.PlayOneShot(FMODEvents.instance.dash, transform.position);
+            //AudioManager.Instance.PlayOneShot(FMODEvents.Instance.dash, transform.position);
 
-            if(leaveAnimeTrail) { dashTrailObject.SetActive(true); }
-            _isDashing = true; 
+            if (leaveAnimeTrail)
+            {
+                dashTrailObject.SetActive(true);
+            }
+
+            _isDashing = true;
             _lastDashTime = Time.time;
-            _rigidbody2D.AddForce(new Vector2((_playerFacingDirection * dashPower), _rigidbody2D.velocity.y + 1), ForceMode2D.Force);
-            
+            _rigidbody2D.AddForce(new Vector2((_playerFacingDirection * dashPower), _rigidbody2D.velocity.y + 1),
+                ForceMode2D.Force);
+
             yield return new WaitForSeconds(dashDuration);
-            
-            if (leaveAnimeTrail) { dashTrailObject.SetActive(false); }
+
+            if (leaveAnimeTrail)
+            {
+                dashTrailObject.SetActive(false);
+            }
+
             _isDashing = false;
         }
 
@@ -159,10 +180,12 @@ namespace Player
                     HealthComponent healthComponent = GetComponent<HealthComponent>();
                     healthComponent?.ApplyFallDamage(fallVelocity);
                 }
-                
+
                 _jumpsRemaining = maxJumps;
                 _isGrounded = true;
-            } else {
+            }
+            else
+            {
                 _isGrounded = false;
             }
         }
@@ -184,9 +207,13 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Updates the player's abilities based on the event data.
+        /// </summary>
+        /// <param name="sender">The component that raised the event.</param>
+        /// <param name="data">The data associated with the event.</param>
         public void UpdateAbilities(Component sender, object data)
         {
-            Debug.Log($"Event from {sender} has been called.");
             if (data is string abilityName)
             {
                 switch (abilityName)
@@ -234,19 +261,22 @@ namespace Player
             }
         }
 
-        private void UpdateSound() {
-
-            //start footsteps event if the player moves and is on the ground
-            if(_rigidbody2D.velocity.x != 0 && _isGrounded && !_isDashing) {
-
-                //get the playback state
-                PLAYBACK_STATE playbackState;
-                _playerFootsteps.getPlaybackState(out playbackState);
+        /// <summary>
+        /// Updates the sound effects based on the player's movement state.
+        /// </summary>
+        private void UpdateSound()
+        {
+            // Start footsteps event if the player moves and is on the ground
+            if (_rigidbody2D.velocity.x != 0 && _isGrounded && !_isDashing)
+            {
+                // Get the playback state
+                _playerFootsteps.getPlaybackState(out var playbackState);
 
                 if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
                     _playerFootsteps.start();
-
-            } else {
+            }
+            else
+            {
                 _playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
             }
         }
