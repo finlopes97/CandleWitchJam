@@ -87,7 +87,7 @@ namespace Player
             _spriteRenderer = GetComponent<SpriteRenderer>();
             // dashTrailObject.SetActive(false);
             ScaryCheck();
-            _playerFootsteps = AudioManager.Instance.CreateEventInstance(FMODEvents.instance.footsteps);
+            _playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.footsteps);
         }
 
         /// <summary>
@@ -117,6 +117,13 @@ namespace Player
                 {
                     _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpPower);
                     _jumpsRemaining--;
+
+                    //play jump sound :
+                    if (_isGrounded) {
+                        AudioManager.instance.PlayOneShot(FMODEvents.instance.jump, transform.position);
+                    } else {
+                        AudioManager.instance.PlayOneShot(FMODEvents.instance.doubleJump, transform.position);
+                    }
                 }
                 else if (context.canceled)
                 {
@@ -145,7 +152,7 @@ namespace Player
         private IEnumerator DashCoroutine()
         {
             //play dash sound here
-            //AudioManager.Instance.PlayOneShot(FMODEvents.Instance.dash, transform.position);
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.dash, transform.position);
 
             if (leaveAnimeTrail)
             {
@@ -179,6 +186,9 @@ namespace Player
                     float fallVelocity = Mathf.Abs(_previousVelocityY);
                     HealthComponent healthComponent = GetComponent<HealthComponent>();
                     healthComponent?.ApplyFallDamage(fallVelocity);
+
+                    //play landing sound (maybe check for vertical velocity > threshold?)
+                    AudioManager.instance.PlayOneShot(FMODEvents.instance.landing, transform.position);
                 }
 
                 _jumpsRemaining = maxJumps;
@@ -214,6 +224,7 @@ namespace Player
         /// <param name="data">The data associated with the event.</param>
         public void UpdateAbilities(Component sender, object data)
         {
+            Debug.Log($"Event from {sender} has been called.");
             if (data is string abilityName)
             {
                 switch (abilityName)
