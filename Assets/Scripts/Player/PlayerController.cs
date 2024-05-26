@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Generics;
 using FMOD.Studio;
 
 namespace Player
@@ -10,63 +11,52 @@ namespace Player
     /// </summary>
     public class PlayerController : MonoBehaviour
     {
-        [Header("Player Settings")] 
-        [Tooltip("Max value for player health.")]
-        [SerializeField] private float maxHealth = 100.0f;
-        [Tooltip("Whether or not the player takes fall damage.")]
-        [SerializeField] private bool takesFallDamage = true;
-        [Tooltip("Velocity at which player takes fall damage (see Fall Speed Multiplier).")] 
-        [SerializeField] private float playerFallDamageVelocityThreshold = 10;
-
         [Header("Movement Settings")] 
-        [Tooltip("Speed at which the player moves.")]
-        [SerializeField] private float moveSpeed = 10.0f;
-        [Tooltip("Force with which the player can jump.")]
-        [SerializeField] private float jumpPower = 8.0f;
-        [Tooltip("Rate at which the player's jump decreases in force (i.e. variable jump height).")]
-        [SerializeField] [Range(0.1f, 1.0f)] private float jumpFallOffRate = 1.0f;
+        [SerializeField, Tooltip("Speed at which the player moves.")] 
+        private float moveSpeed = 10.0f;
+        [SerializeField, Tooltip("Force with which the player can jump.")] 
+        private float jumpPower = 8.0f;
+        [SerializeField, Tooltip("Rate at which the player's jump decreases in " +
+                                 "force (i.e. variable jump height)."), Range(0.1f, 1.0f)] 
+        private float jumpFallOffRate = 1.0f;
 
-        // [Header("Ability Settings")] 
-        // [Tooltip("Amount of time between key presses to register a double tap.")]
-        // [SerializeField] [Range(0.10f, 1.00f)] private float doublePressThreshold = 0.25f;
-
-        [Header("Dash Settings")]
-        [Tooltip("Force applied to the character when dashing.")]
-        [SerializeField] private float dashPower = 500f;
-        [Tooltip("Cooldown between dashes in seconds.")]
-        [SerializeField] private float dashCooldown = 3.0f;
-        [Tooltip("Duration of the dash in seconds.")]
-        [SerializeField] private float dashDuration = 0.3f;
+        [Header("Dash Settings")] [SerializeField, Tooltip("Whether or not the player can dash")]
+        private bool canDash;
+        [SerializeField, Tooltip("Force applied to the character when dashing.")] 
+        private float dashPower = 500f;
+        [SerializeField, Tooltip("Cooldown between dashes in seconds.")]
+        private float dashCooldown = 3.0f;
+        [SerializeField, Tooltip("Duration of the dash in seconds.")] 
+        private float dashDuration = 0.3f;
 
         [Header("Double Jump")]
-        [Tooltip("Amount of times a player can jump. Set to 2 for testing purposes.")]
-        [SerializeField] private int maxJumps = 2;
+        [SerializeField, Tooltip("Amount of times a player can jump. Set to 2 for testing purposes.")] 
+        private int maxJumps = 1;
         
         [Header("Ground Checks")]
-        [Tooltip("Transform (point in space) for detecting ground beneath player.")]
-        [SerializeField] private Transform groundCheck;
-        [Tooltip("Size of that transform, should be roughly in line with the player character's sprite's feet.")]
-        [SerializeField] private Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
-        [Tooltip("Layer for detecting intersections with ground.")]
-        [SerializeField] private LayerMask groundLayer;
+        [SerializeField, Tooltip("Transform (point in space) for detecting ground beneath player.")] 
+        private Transform groundCheck;
+        [SerializeField, Tooltip("Size of that transform, should be roughly in line with the player character's sprite's feet.")] 
+        private Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
+        [SerializeField, Tooltip("Layer for detecting intersections with ground.")] 
+        private LayerMask groundLayer;
 
         [Header("Gravity")] 
-        [Tooltip("The base gravity applied to the player.")]
-        [SerializeField] private float baseGravity = 2.0f;
-        [Tooltip("The max speed at which a player can fall.")]
-        [SerializeField] private float maxFallSpeed = 18.0f;
-        [Tooltip("The rate at which a player's fall speed can increase while falling.")]
-        [SerializeField] private float fallSpeedMultiplier = 2.0f;
+        [SerializeField, Tooltip("The base gravity applied to the player.")] 
+        private float baseGravity = 2.0f;
+        [SerializeField, Tooltip("The max speed at which a player can fall.")] 
+        private float maxFallSpeed = 18.0f;
+        [SerializeField, Tooltip("The rate at which a player's fall speed can increase while falling.")] 
+        private float fallSpeedMultiplier = 2.0f;
         
-        [Header("Debug Settings")] 
-        [Tooltip("God mode.")]
-        [SerializeField] private bool isInvulnerable;
-        [Tooltip("Scary mode.")]
-        [SerializeField] private bool isScary;
-        [SerializeField] private Sprite scarySprite;
-        [Tooltip("Anime Mode.")]
-        [SerializeField] private GameObject dashTrailObject;
-        [SerializeField] private bool leaveAnimeTrail;
+        [SerializeField, Tooltip("Scary mode.")] 
+        private bool isScary;
+        [SerializeField] 
+        private Sprite scarySprite;
+        [SerializeField, Tooltip("Anime Mode.")] 
+        private GameObject dashTrailObject;
+        [SerializeField] 
+        private bool leaveAnimeTrail;
 
         private Rigidbody2D _rigidbody2D;
         private SpriteRenderer _spriteRenderer;
@@ -76,23 +66,17 @@ namespace Player
         private float _playerFacingDirection;
         private bool _isDashing;
         private bool _isGrounded;
+        private float _previousVelocityY;
 
-        //audio
-        private EventInstance playerFootsteps;
-
-        private void Awake()
-        {
-            _rigidbody2D = GetComponent<Rigidbody2D>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            dashTrailObject.SetActive(false);
-            
-            ScaryCheck();
-
-        }
+        private EventInstance _playerFootsteps;
 
         private void Start()
         {
-            playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.footsteps);
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            // dashTrailObject.SetActive(false);
+            ScaryCheck();
+            _playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.footsteps);
         }
 
         /// <summary>
@@ -137,7 +121,7 @@ namespace Player
         /// <param name="context">Input context containing action details.</param>
         public void Dash(InputAction.CallbackContext context)
         { 
-            if (context.started && Time.time >= _lastDashTime + dashCooldown && !_isDashing)
+            if (canDash && context.started && Time.time >= _lastDashTime + dashCooldown && !_isDashing)
             {
                 StartCoroutine(DashCoroutine());
             }
@@ -169,6 +153,13 @@ namespace Player
         {
             if (Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer))
             {
+                if (!_isGrounded)
+                {
+                    float fallVelocity = Mathf.Abs(_previousVelocityY);
+                    HealthComponent healthComponent = GetComponent<HealthComponent>();
+                    healthComponent?.ApplyFallDamage(fallVelocity);
+                }
+                
                 _jumpsRemaining = maxJumps;
                 _isGrounded = true;
             } else {
@@ -191,7 +182,25 @@ namespace Player
             {
                 _rigidbody2D.gravityScale = baseGravity;
             }
-            // Debug.Log($"Player's vertical velocity: {_rigidbody2D.velocity.y}...");
+        }
+
+        public void UpdateAbilities(Component sender, object data)
+        {
+            Debug.Log($"Event from {sender} has been called.");
+            if (data is string abilityName)
+            {
+                switch (abilityName)
+                {
+                    case "DoubleJump":
+                        maxJumps = 2;
+                        break;
+                    case "Dash":
+                        canDash = true;
+                        break;
+                    default:
+                        return;
+                }
+            }
         }
 
         private void FixedUpdate()
@@ -206,6 +215,7 @@ namespace Player
 
         private void Update()
         {
+            _previousVelocityY = _rigidbody2D.velocity.y;
             GroundCheck();
             Gravity();
         }
@@ -231,13 +241,13 @@ namespace Player
 
                 //get the playback state
                 PLAYBACK_STATE playbackState;
-                playerFootsteps.getPlaybackState(out playbackState);
+                _playerFootsteps.getPlaybackState(out playbackState);
 
                 if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
-                    playerFootsteps.start();
+                    _playerFootsteps.start();
 
             } else {
-                playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
+                _playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
             }
         }
     }
