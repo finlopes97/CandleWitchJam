@@ -87,7 +87,7 @@ namespace Player
             _spriteRenderer = GetComponent<SpriteRenderer>();
             // dashTrailObject.SetActive(false);
             ScaryCheck();
-            _playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.footsteps);
+            _playerFootsteps = AudioManager.Instance.CreateEventInstance(FMODEvents.instance.footsteps);
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace Player
 
                     //play jump sound :
                     if (_isGrounded) {
-                        AudioManager.instance.PlayOneShot(FMODEvents.instance.jump, transform.position);
+                        AudioManager.Instance.PlayOneShot(FMODEvents.instance.jump, transform.position);
                     } else {
-                        AudioManager.instance.PlayOneShot(FMODEvents.instance.doubleJump, transform.position);
+                        AudioManager.Instance.PlayOneShot(FMODEvents.instance.doubleJump, transform.position);
                     }
                 }
                 else if (context.canceled)
@@ -152,7 +152,7 @@ namespace Player
         private IEnumerator DashCoroutine()
         {
             //play dash sound here
-            AudioManager.instance.PlayOneShot(FMODEvents.instance.dash, transform.position);
+            AudioManager.Instance.PlayOneShot(FMODEvents.instance.dash, transform.position);
 
             if (leaveAnimeTrail)
             {
@@ -188,7 +188,7 @@ namespace Player
                     healthComponent?.ApplyFallDamage(fallVelocity);
 
                     //play landing sound (maybe check for vertical velocity > threshold?)
-                    AudioManager.instance.PlayOneShot(FMODEvents.instance.landing, transform.position);
+                    AudioManager.Instance.PlayOneShot(FMODEvents.instance.landing, transform.position);
                 }
 
                 _jumpsRemaining = maxJumps;
