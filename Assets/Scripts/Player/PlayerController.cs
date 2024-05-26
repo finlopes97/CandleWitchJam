@@ -106,6 +106,13 @@ namespace Player
                 {
                     _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpPower);
                     _jumpsRemaining--;
+
+                    //play jump sound :
+                    if (_isGrounded) {
+                        AudioManager.instance.PlayOneShot(FMODEvents.instance.jump, transform.position);
+                    } else {
+                        AudioManager.instance.PlayOneShot(FMODEvents.instance.doubleJump, transform.position);
+                    }
                 }
                 else if (context.canceled)
                 {
@@ -133,7 +140,7 @@ namespace Player
         private IEnumerator DashCoroutine()
         {
             //play dash sound here
-            //AudioManager.instance.PlayOneShot(FMODEvents.instance.dash, transform.position);
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.dash, transform.position);
 
             if(leaveAnimeTrail) { dashTrailObject.SetActive(true); }
             _isDashing = true; 
@@ -158,6 +165,9 @@ namespace Player
                     float fallVelocity = Mathf.Abs(_previousVelocityY);
                     HealthComponent healthComponent = GetComponent<HealthComponent>();
                     healthComponent?.ApplyFallDamage(fallVelocity);
+
+                    //play landing sound (maybe check for vertical velocity > threshold?)
+                    AudioManager.instance.PlayOneShot(FMODEvents.instance.landing, transform.position);
                 }
                 
                 _jumpsRemaining = maxJumps;

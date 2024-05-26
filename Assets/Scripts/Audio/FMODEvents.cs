@@ -11,8 +11,9 @@ public class FMODEvents : MonoBehaviour
     [field: Header("Player sounds")]
     [field: SerializeField] public EventReference footsteps { get; private set; }
     [field: SerializeField] public EventReference jump { get; private set; }
+    [field: SerializeField] public EventReference doubleJump { get; private set; }
+    [field: SerializeField] public EventReference landing { get; private set; }
     [field: SerializeField] public EventReference dash { get; private set; }
-
 
     public static FMODEvents instance { get; private set; }
 

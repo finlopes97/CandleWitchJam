@@ -1427,18 +1427,32 @@ MonoBehaviour:
     Path: event:/SFX/Footsteps
   <jump>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1328791586
+      Data2: 1089116554
+      Data3: 204084387
+      Data4: -298528499
+    Path: event:/SFX/Jump
+  <doubleJump>k__BackingField:
+    Guid:
+      Data1: -803690883
+      Data2: 1174809219
+      Data3: 1657084305
+      Data4: -162733494
+    Path: event:/SFX/DoubleJump
+  <landing>k__BackingField:
+    Guid:
+      Data1: 1232686024
+      Data2: 1206588022
+      Data3: -1864316796
+      Data4: 89460507
+    Path: event:/SFX/Land
   <dash>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1836326591
+      Data2: 1196920853
+      Data3: 1557799589
+      Data4: -1307503456
+    Path: event:/SFX/Dash
 --- !u!1 &1909578840
 GameObject:
   m_ObjectHideFlags: 0
