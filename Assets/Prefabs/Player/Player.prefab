@@ -197,6 +197,7 @@ MonoBehaviour:
   moveSpeed: 5
   jumpPower: 8
   jumpFallOffRate: 0.5
+  jumpParticleSystem: {fileID: 9032094796752855555, guid: df7d4eaa0d97fd44681ec794f074695c, type: 3}
   canDash: 0
   dashPower: 500
   dashCooldown: 1

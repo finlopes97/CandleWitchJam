@@ -13,57 +13,52 @@ namespace Player
     /// </summary>
     public class PlayerController : MonoBehaviour
     {
-        [Header("Movement Settings")] [SerializeField, Tooltip("Speed at which the player moves.")]
+        [Header("Movement Settings")] 
+        [SerializeField, Tooltip("Speed at which the player moves.")]
         private float moveSpeed = 10.0f;
-
+        
+        [Header("Jump Settings")]
         [SerializeField, Tooltip("Force with which the player can jump.")]
         private float jumpPower = 8.0f;
-
         [SerializeField, Tooltip("Rate at which the player's jump decreases in " +
                                  "force (i.e. variable jump height)."), Range(0.1f, 1.0f)]
         private float jumpFallOffRate = 1.0f;
-
+        [SerializeField, Tooltip("The particle system to spawn on a jump.")]
+        private ParticleSystem jumpParticleSystem;
+        
         [Header("Dash Settings")] [SerializeField, Tooltip("Whether or not the player can dash")]
         private bool canDash;
-
         [SerializeField, Tooltip("Force applied to the character when dashing.")]
         private float dashPower = 500f;
-
         [SerializeField, Tooltip("Cooldown between dashes in seconds.")]
         private float dashCooldown = 3.0f;
-
         [SerializeField, Tooltip("Duration of the dash in seconds.")]
         private float dashDuration = 0.3f;
 
         [Header("Double Jump")]
         [SerializeField, Tooltip("Amount of times a player can jump. Set to 2 for testing purposes.")]
         private int maxJumps = 1;
-
+        
         [Header("Ground Checks")]
         [SerializeField, Tooltip("Transform (point in space) for detecting ground beneath player.")]
         private Transform groundCheck;
-
-        [SerializeField,
-         Tooltip("Size of that transform, should be roughly in line with the player character's sprite's feet.")]
+        [SerializeField, Tooltip("Size of that transform, should be roughly in line with the player character's sprite's feet.")]
         private Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
-
         [SerializeField, Tooltip("Layer for detecting intersections with ground.")]
         private LayerMask groundLayer;
 
         [Header("Gravity")] [SerializeField, Tooltip("The base gravity applied to the player.")]
         private float baseGravity = 2.0f;
-
         [SerializeField, Tooltip("The max speed at which a player can fall.")]
         private float maxFallSpeed = 18.0f;
-
         [SerializeField, Tooltip("The rate at which a player's fall speed can increase while falling.")]
         private float fallSpeedMultiplier = 2.0f;
-
+        
+        [Header("Debug Tools")]
         [SerializeField, Tooltip("Scary mode.")]
         private bool isScary;
-
-        [SerializeField] private Sprite scarySprite;
-
+        [SerializeField] 
+        private Sprite scarySprite;
         [SerializeField, Tooltip("Anime Mode.")]
         private GameObject dashTrailObject;
 
@@ -85,6 +80,7 @@ namespace Player
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _jumpsRemaining = maxJumps;
             // dashTrailObject.SetActive(false);
             ScaryCheck();
             _playerFootsteps = AudioManager.Instance.CreateEventInstance(FMODEvents.instance.footsteps);
@@ -99,7 +95,6 @@ namespace Player
             if (context.performed)
             {
                 _playerFacingDirection = context.ReadValue<float>();
-                // Debug.Log($"Player is facing: {(_playerFacingDirection < 0 ? "left" : "right")}");
             }
 
             _horizontalMovementDirection = context.ReadValue<float>();
@@ -111,27 +106,33 @@ namespace Player
         /// <param name="context">Input context containing action details.</param>
         public void Jump(InputAction.CallbackContext context)
         {
-            if (_jumpsRemaining > 0)
+            if (context.performed)
             {
-                if (context.performed)
+                Debug.Log($"Jumps remaining before HandleJump(): {_jumpsRemaining}");
+                HandleJump();
+                Debug.Log($"Jumps remaining after HandleJump(): {_jumpsRemaining}");
+            }
+            else if (context.canceled)
+            {
+                if (_rigidbody2D.velocity.y > 0)
                 {
-                    _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpPower);
-                    _jumpsRemaining--;
-
-                    //play jump sound :
-                    if (_isGrounded) {
-                        AudioManager.Instance.PlayOneShot(FMODEvents.instance.jump, transform.position);
-                    } else {
-                        AudioManager.Instance.PlayOneShot(FMODEvents.instance.doubleJump, transform.position);
-                    }
-                }
-                else if (context.canceled)
-                {
-                    _rigidbody2D.velocity =
-                        new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y * jumpFallOffRate);
-                    _jumpsRemaining--;
+                    _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y * jumpFallOffRate);
                 }
             }
+        }
+    
+        private void HandleJump()
+        {
+            if (_jumpsRemaining <= 0) return;
+            
+            Instantiate(jumpParticleSystem, groundCheck);
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpPower);
+            _jumpsRemaining--;
+            // Play jump sound
+            if (_isGrounded) 
+                AudioManager.Instance.PlayOneShot(FMODEvents.instance.jump, transform.position);
+            else
+                AudioManager.Instance.PlayOneShot(FMODEvents.instance.doubleJump, transform.position);
         }
 
         /// <summary>
@@ -187,13 +188,14 @@ namespace Player
                     HealthComponent healthComponent = GetComponent<HealthComponent>();
                     healthComponent?.ApplyFallDamage(fallVelocity);
 
-                    //play landing sound (maybe check for vertical velocity > threshold?)
+                    // Play landing sound (maybe check for vertical velocity > threshold?)
                     AudioManager.Instance.PlayOneShot(FMODEvents.instance.landing, transform.position);
+                   
+                    Debug.Log("Player just landed. Resetting jumps.");
+                    _jumpsRemaining = maxJumps;
+                    _isGrounded = true;
                 }
-
-                _jumpsRemaining = maxJumps;
-                _isGrounded = true;
-            }
+            } 
             else
             {
                 _isGrounded = false;
@@ -231,6 +233,7 @@ namespace Player
                 {
                     case "DoubleJump":
                         maxJumps = 2;
+                        _jumpsRemaining = maxJumps;
                         break;
                     case "Dash":
                         canDash = true;

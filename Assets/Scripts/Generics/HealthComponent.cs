@@ -1,5 +1,6 @@
 ﻿using EventSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Generics
 {
@@ -10,18 +11,16 @@ namespace Generics
     {
         [Header("Entity health variables")] [SerializeField, Tooltip("The max health for this entity")]
         private int maxHealth = 100;
-
         [SerializeField, Tooltip("The current health of the entity, for debugging purposes, largely")]
         private int currentHealth;
-
         [SerializeField, Tooltip("Threshold to determine if the player takes fall damage, " +
                                  "a value of 0 means the entity does not take fall damage.")]
         private float fallDamageVelocityThreshold;
-
         [SerializeField, Tooltip("Multiplier for fall damage (velocity.y * fallDamageMultiplier")]
         private float fallDamageMultiplier = 2.0f;
-
-        [Header("Events")] public GameEvent onPlayerHealthChanged; // Event raised when the player's health changes
+        
+        [Header("Events")] 
+        public GameEvent onHealthChanged; // Event raised when the player's health changes
 
         private void Awake()
         {
@@ -35,7 +34,7 @@ namespace Generics
         public void ApplyDamage(int amount)
         {
             currentHealth -= amount;
-            onPlayerHealthChanged.Raise(this, currentHealth);
+            onHealthChanged.Raise(this, currentHealth);
         }
 
         /// <summary>
