@@ -108,9 +108,7 @@ namespace Player
         {
             if (context.performed)
             {
-                Debug.Log($"Jumps remaining before HandleJump(): {_jumpsRemaining}");
                 HandleJump();
-                Debug.Log($"Jumps remaining after HandleJump(): {_jumpsRemaining}");
             }
             else if (context.canceled)
             {
@@ -191,7 +189,6 @@ namespace Player
                     // Play landing sound (maybe check for vertical velocity > threshold?)
                     AudioManager.Instance.PlayOneShot(FMODEvents.instance.landing, transform.position);
                    
-                    Debug.Log("Player just landed. Resetting jumps.");
                     _jumpsRemaining = maxJumps;
                     _isGrounded = true;
                 }
@@ -226,7 +223,6 @@ namespace Player
         /// <param name="data">The data associated with the event.</param>
         public void UpdateAbilities(Component sender, object data)
         {
-            Debug.Log($"Event from {sender} has been called.");
             if (data is string abilityName)
             {
                 switch (abilityName)
