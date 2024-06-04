@@ -34,6 +34,8 @@ namespace Player
         private float dashCooldown = 3.0f;
         [SerializeField, Tooltip("Duration of the dash in seconds.")]
         private float dashDuration = 0.3f;
+        [SerializeField, Tooltip("Enable gravity during dash.")]
+        private bool dashGravity = true;
 
         [Header("Double Jump")]
         [SerializeField, Tooltip("Amount of times a player can jump. Set to 2 for testing purposes.")]
@@ -53,7 +55,17 @@ namespace Player
         private float maxFallSpeed = 18.0f;
         [SerializeField, Tooltip("The rate at which a player's fall speed can increase while falling.")]
         private float fallSpeedMultiplier = 2.0f;
-        
+
+        [Header("Player Audio")]
+        [SerializeField, Range(0, 5), Tooltip("Speed at which the footstep sound loops.")]
+        private int footstepSpeed;
+        [SerializeField, Range(0, 1), Tooltip("Arbitrary value to control amount of wet elements in the footstep audio.")]
+        private float footstepWetness;
+        [SerializeField, Tooltip("Vertical speed at which the falling sound starts.")]
+        private float fallSoundMinSpeed = 5.0f;
+        [SerializeField, Tooltip("Vertical speed at which the falling sound is at max strength.")]
+        private float fallSoundMaxSpeed = 15.0f;
+
         [Header("Debug Tools")]
         [SerializeField, Tooltip("Scary mode.")]
         private bool isScary;
@@ -75,6 +87,7 @@ namespace Player
         private float _previousVelocityY;
 
         private EventInstance _playerFootsteps;
+        private EventInstance _playerFallingAudio;
 
         private void Start()
         {
@@ -84,6 +97,7 @@ namespace Player
             // dashTrailObject.SetActive(false);
             ScaryCheck();
             _playerFootsteps = AudioManager.Instance.CreateEventInstance(FMODEvents.instance.footsteps);
+            _playerFallingAudio = AudioManager.Instance.CreateEventInstance(FMODEvents.instance.falling);
         }
 
         /// <summary>
@@ -245,6 +259,8 @@ namespace Player
             if (!_isDashing)
             {
                 _rigidbody2D.velocity = new Vector2(_horizontalMovementDirection * moveSpeed, _rigidbody2D.velocity.y);
+            } else if (!dashGravity) {
+                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
             }
 
             UpdateSound();
@@ -274,20 +290,42 @@ namespace Player
         /// <summary>
         /// Updates the sound effects based on the player's movement state.
         /// </summary>
-        private void UpdateSound()
-        {
+        private void UpdateSound() {
+
+            //update global sound variables
+            FMODUnity.RuntimeManager.StudioSystem.setParameterByName("Wetness", footstepWetness);
+
             // Start footsteps event if the player moves and is on the ground
-            if (_rigidbody2D.velocity.x != 0 && _isGrounded && !_isDashing)
-            {
+            if (_rigidbody2D.velocity.x != 0 && _isGrounded && !_isDashing) {
                 // Get the playback state
-                _playerFootsteps.getPlaybackState(out var playbackState);
+                _playerFootsteps.getPlaybackState(out PLAYBACK_STATE playbackState);
 
                 if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
                     _playerFootsteps.start();
-            }
-            else
-            {
+
+                _playerFootsteps.setParameterByName("Speed", footstepSpeed);
+            } else {
                 _playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
+            }
+
+            //air sound when falling
+            if (!_isGrounded && _rigidbody2D.velocity.y < -fallSoundMinSpeed) {
+                // Get the playback state
+                _playerFallingAudio.getPlaybackState(out PLAYBACK_STATE playbackState);
+
+                if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
+                    _playerFallingAudio.start();
+
+                float fallSpeedParameter;
+
+                if (_rigidbody2D.velocity.y < -fallSoundMaxSpeed)
+                    fallSpeedParameter = 1;
+                else
+                    fallSpeedParameter = -(_rigidbody2D.velocity.y / fallSoundMaxSpeed);
+
+                _playerFallingAudio.setParameterByName("FallSpeed", fallSpeedParameter);
+            } else {
+                _playerFallingAudio.stop(STOP_MODE.ALLOWFADEOUT);
             }
         }
     }

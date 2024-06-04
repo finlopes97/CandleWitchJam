@@ -14,6 +14,10 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference doubleJump { get; private set; }
     [field: SerializeField] public EventReference landing { get; private set; }
     [field: SerializeField] public EventReference dash { get; private set; }
+    [field: SerializeField] public EventReference falling { get; private set; }
+
+    [field: Header("Enemy sounds")]
+    [field: SerializeField] public EventReference sludgeMove { get; private set; }
 
     public static FMODEvents instance { get; private set; }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{3155eab3-b26c-4755-82af-da655e92367e}">
+		<property name="assetPath">
+			<value>wetLayer5.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.51650793650793647</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{9f067abd-100d-45f2-b111-4d3250718cc0}</destination>
+		</relationship>
+	</object>
+</objects>
