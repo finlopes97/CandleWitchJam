@@ -1,0 +1,862 @@
+fileFormatVersion: 2
+guid: 4acc62835d99cba42a2785d27c071e9f
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_0
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 4799
+        width: 57
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7497e06343359434ca721498617c418f
+      internalID: -1195238763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_1
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 4799
+        width: 23
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ddb4b58cf7e2114f8db70187eb5b3aa
+      internalID: -1693977296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_2
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 4800
+        width: 57
+        height: 371
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8002e4e9d4c769d4ba689484b9b5df6a
+      internalID: 1745151961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_3
+      rect:
+        serializedVersion: 2
+        x: 1423
+        y: 4800
+        width: 57
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43be9cdef39b93c41b30de490791c623
+      internalID: 548344678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_4
+      rect:
+        serializedVersion: 2
+        x: 3005
+        y: 4800
+        width: 1640
+        height: 370
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e780f3f9ede14347a3db3ef7829289b
+      internalID: 1150329640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_5
+      rect:
+        serializedVersion: 2
+        x: 6118
+        y: 4580
+        width: 577
+        height: 775
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 255506a53fab0d14c95990bb1e404381
+      internalID: 1601971492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_6
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 3413
+        width: 1323
+        height: 1348
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f1993494e4b24448bdd2db4a6fc6240
+      internalID: 454616584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_7
+      rect:
+        serializedVersion: 2
+        x: 2240
+        y: 4416
+        width: 194
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fece7bde953d844478d9100884c3fe06
+      internalID: -1001266311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_8
+      rect:
+        serializedVersion: 2
+        x: 2429
+        y: 4446
+        width: 38
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a7dac0c5e4bd524da54b32e0f6bfae5
+      internalID: -633110580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_9
+      rect:
+        serializedVersion: 2
+        x: 2457
+        y: 4451
+        width: 79
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aca9a78ded50be8478fea1fba7e538e5
+      internalID: 537793429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_10
+      rect:
+        serializedVersion: 2
+        x: 2533
+        y: 4462
+        width: 26
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59754e483f4b7a4c96e5f7036ef536b
+      internalID: -905286053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_11
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 4160
+        width: 320
+        height: 521
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe03db3ee2a5a7149bca5c3a374c7b60
+      internalID: -254420317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_12
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 3836
+        width: 34
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55dc8d01bf05e4846a72fc64d4e4c227
+      internalID: -415538951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_13
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 3835
+        width: 25
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 412d4b4ca3b300b4982933513ff6dbb1
+      internalID: 2096597136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_14
+      rect:
+        serializedVersion: 2
+        x: 3016
+        y: 3431
+        width: 1323
+        height: 943
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e683ea3568d748428c995616a202ddd
+      internalID: -1998129713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_15
+      rect:
+        serializedVersion: 2
+        x: 6083
+        y: 2807
+        width: 634
+        height: 1072
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 613ea2d4f4d7e6f448625f0b872b32d1
+      internalID: -2698307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_16
+      rect:
+        serializedVersion: 2
+        x: 2659
+        y: 2240
+        width: 469
+        height: 873
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0e3dd2e68ba2014ebf07e31eb6345b6
+      internalID: 1096026993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_17
+      rect:
+        serializedVersion: 2
+        x: 3528
+        y: 2240
+        width: 639
+        height: 895
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b701eaabf023f0e4880088b8efc72e43
+      internalID: -1989354778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_18
+      rect:
+        serializedVersion: 2
+        x: 4186
+        y: 2537
+        width: 386
+        height: 691
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bd0e6914f3d42444b26b3249663caf4
+      internalID: 972498724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_19
+      rect:
+        serializedVersion: 2
+        x: 4695
+        y: 2536
+        width: 777
+        height: 1144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4763474b59d46684e9526f736f67560c
+      internalID: 1545761841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_20
+      rect:
+        serializedVersion: 2
+        x: 5760
+        y: 2979
+        width: 320
+        height: 385
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b5d3636581853a47b0d4cff96c319fe
+      internalID: 771145124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_21
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 2240
+        width: 1056
+        height: 631
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 062f1b0d58ca3b3459da6b2872660e90
+      internalID: -1819444861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_22
+      rect:
+        serializedVersion: 2
+        x: 1647
+        y: 2240
+        width: 840
+        height: 387
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6191938a9fcf4a42bcf001bbd0eb51b
+      internalID: 15938957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_23
+      rect:
+        serializedVersion: 2
+        x: 4448
+        y: 2471
+        width: 38
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec402d57e09289d449ece3804c79bea4
+      internalID: -248060712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_24
+      rect:
+        serializedVersion: 2
+        x: 6720
+        y: 2528
+        width: 320
+        height: 357
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 185f4915f98ecd344924db99de7cbffe
+      internalID: 384886027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_25
+      rect:
+        serializedVersion: 2
+        x: 7360
+        y: 2523
+        width: 640
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 144e6e21ebfc3d141b142ca9bb5d4118
+      internalID: -266394347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_26
+      rect:
+        serializedVersion: 2
+        x: 8066
+        y: 2523
+        width: 508
+        height: 411
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f974f0d40ad91f14f8a72974f4daab34
+      internalID: -1962940937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_27
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 1221
+        width: 126
+        height: 257
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99097da46dcd79d4fb82df245bb2c223
+      internalID: -1404490723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_28
+      rect:
+        serializedVersion: 2
+        x: 6400
+        y: 320
+        width: 320
+        height: 1600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8559bdf0b23213e4486e86f871887dee
+      internalID: -812524800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_29
+      rect:
+        serializedVersion: 2
+        x: 7040
+        y: 320
+        width: 1577
+        height: 1601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b308e2d87e15f764bbc36d8b429e0623
+      internalID: -1548498813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_30
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 1182
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70ee2c960cc65a146a8f7889a3358969
+      internalID: 1593853855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_31
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 0
+        width: 604
+        height: 1174
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 705bb8eac98b6ef4aa86c78a3c1b84ea
+      internalID: -1647289666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_32
+      rect:
+        serializedVersion: 2
+        x: 6720
+        y: 0
+        width: 319
+        height: 305
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a3af66844c999b449da701a56b07ec3
+      internalID: -1124056347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All assets With Code-Recovered_33
+      rect:
+        serializedVersion: 2
+        x: 7360
+        y: 0
+        width: 469
+        height: 305
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7051724721197c49af72caf2982d145
+      internalID: 844447878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      All assets With Code-Recovered_0: -1195238763
+      All assets With Code-Recovered_1: -1693977296
+      All assets With Code-Recovered_10: -905286053
+      All assets With Code-Recovered_11: -254420317
+      All assets With Code-Recovered_12: -415538951
+      All assets With Code-Recovered_13: 2096597136
+      All assets With Code-Recovered_14: -1998129713
+      All assets With Code-Recovered_15: -2698307
+      All assets With Code-Recovered_16: 1096026993
+      All assets With Code-Recovered_17: -1989354778
+      All assets With Code-Recovered_18: 972498724
+      All assets With Code-Recovered_19: 1545761841
+      All assets With Code-Recovered_2: 1745151961
+      All assets With Code-Recovered_20: 771145124
+      All assets With Code-Recovered_21: -1819444861
+      All assets With Code-Recovered_22: 15938957
+      All assets With Code-Recovered_23: -248060712
+      All assets With Code-Recovered_24: 384886027
+      All assets With Code-Recovered_25: -266394347
+      All assets With Code-Recovered_26: -1962940937
+      All assets With Code-Recovered_27: -1404490723
+      All assets With Code-Recovered_28: -812524800
+      All assets With Code-Recovered_29: -1548498813
+      All assets With Code-Recovered_3: 548344678
+      All assets With Code-Recovered_30: 1593853855
+      All assets With Code-Recovered_31: -1647289666
+      All assets With Code-Recovered_32: -1124056347
+      All assets With Code-Recovered_33: 844447878
+      All assets With Code-Recovered_4: 1150329640
+      All assets With Code-Recovered_5: 1601971492
+      All assets With Code-Recovered_6: 454616584
+      All assets With Code-Recovered_7: -1001266311
+      All assets With Code-Recovered_8: -633110580
+      All assets With Code-Recovered_9: 537793429
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
